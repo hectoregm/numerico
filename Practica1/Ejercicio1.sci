@@ -26,9 +26,18 @@ else
 end
 endfunction
 
-vec = [1,2,3,4,5]
+sizevec = input('Defina el tamaño del vector: ')
+vecones = ones(1,sizevec)
+vec = [1:sizevec]
+disp('Tenemos el vector de unos')
+disp(vecones)
+disp('Usando la funcion suma con la opcion 1 obtenemos:')
+disp(Ejercicio1(1,vecones))
+disp('Usando la funcion suma con la opcion 2 obtenemos:')
+disp(Ejercicio1(2,vecones))
 disp('Tenemos el vector:')
 disp(vec)
-disp('Usando la funcion suma con opcion 1 obtenemos:')
+disp('Usando la funcion suma con la opcion 1 obtenemos:')
 disp(Ejercicio1(1,vec))
-
+disp('Usando la funcion suma con la opcion 2 obtenemos:')
+disp(Ejercicio1(2,vec))
