@@ -1,4 +1,5 @@
 function x = STI(A,b)
+// Autores: Jorge Zavaleta
 // Funcion que resuelve el sistema triangular inferior (STI) de ecuaciones
 // lineales Ax = b (sustitucion hacia adelante)
 //*****************************************************************************
@@ -20,6 +21,7 @@ end
 endfunction
 
 function x = STS(A,b)
+// Autores: Jorge Zavaleta
 // Funcion que resuelve el sistema triangular superior (STS) de ecuaciones
 // lineales Ax = b (sustitucion hacia atras)
 //*****************************************************************************
@@ -41,6 +43,7 @@ end
 endfunction
 
 function [L,U,signo] = faclupp(A)
+// Autores: Jorge Zavaleta, Hector E. Gomez Morales
 // Funcion que realiza la factorizacion LU de la matriz A (A = L*U) usando pivoteo parcial
 //*****************************************************************************
 //->Entrada
@@ -79,6 +82,7 @@ endfunction
 
 
 function x = lur(A,b)
+// Autores: Jorge Zavaleta, Hector E. Gomez Morales
 // Funcion que resuelve un sistema de ecuaciones usando factorizacion LU 
 // el sistema de ecuaciones lineales Ax = b mediante factorizacion LU, STI y STS 
 //*****************************************************************************
