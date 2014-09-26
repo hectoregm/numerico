@@ -59,6 +59,8 @@ signo = 1;
 for i=1:n-1
     [val,r] = max(abs(A(i:n,i)));
     r = r + i - 1;
+    
+    // Realizamos pivoteo si es necesario, llevamos cuenta del signo
     if r ~= i
         signo = signo * -1
         A([i r],1:n) = A([r i],1:n);
@@ -90,13 +92,12 @@ function x = lur(A,b)
 //                    solucion al sistema de ecuaciones.
 //*****************************************************************************
 n=size(A,'r');
-signo = 1;
 for i=1:n-1
     [val,r] = max(abs(A(i:n,i)));
     r = r + i - 1;
 
+    // Realizamos pivoteo si es necesario
     if r ~= i
-        signo = signo * -1
         A([i r],1:n) = A([r i],1:n);
         b([i r]) = b([r i]);
     end
@@ -111,10 +112,7 @@ end
 L = eye(n,n) + tril(A,-1);
 U = triu(A);
 
-disp(L)
-disp(U)
-disp(b)
-
+// Resolvemos los sistemas usando STI y STS
 y = STI(L,b)
 x = STS(U,y)
 endfunction
@@ -152,3 +150,16 @@ endfunction
 A = [2,4,-2;4,9,-3;-2,-1,7;]
 B = [4;8;-6]
 C = [2,4,-2;4,-1,-3;-2,9,7;]
+
+disp("Matriz A:")
+disp(A)
+disp("Vector b:")
+disp(B)
+disp("Solucion sistema Ax = b:")
+disp(lur(A,B))
+
+disp("Determinante de A:")
+disp(mdet(A))
+
+disp("Matriz C:")
+disp(mdet(C))
