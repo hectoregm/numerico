@@ -64,29 +64,45 @@ end
 b = H * (ones(n,1))
 endfunction
 
-function r = rhilbert(n)
+function rhilbert(n)
+// Autores: Hector Enrique Gomez Morales
+// Funcion que genera una matriz de Hilbert 
+//*****************************************************************************
+// -> Entrada
+//  n (Real) - Indica el tamaño de la matriz de Hilbert deseada
+//
+// -> Salida
+//  Se imprime los resultados de la norma residual, norma de error y condicion
+//  de la matriz de Hilbert de nxn
+//*****************************************************************************
 [H,b] = hilbert(n)
 CT = chol(H)
 
 y = STI(CT.', b)
 x = STS(CT, y)
 
-disp("Vector b")
-disp(b)
-disp("H*x")
-disp(H*x)
-disp("Vector x resuelto:")
-disp(x)
-disp("b - (H*x)")
-disp(b-(H*x))
 r = norm(b - (H*x), 'inf')
 err = x - ones(n,1)
 disp("Normal residual:")
 disp(r)
-disp("Error dado x:")
-disp(err)
 disp("Norma del error")
-disp(norm(err))
+disp(norm(err, 'inf'))
 disp("Condicion de H")
 disp(cond(H))
 endfunction
+
+disp("Analisis matriz de Hilbert de 3x3")
+rhilbert(3)
+disp("Analisis matriz de Hilbert de 5x5")
+rhilbert(5)
+disp("Analisis matriz de Hilbert de 8x8")
+rhilbert(8)
+disp("Analisis matriz de Hilbert de 10x10")
+rhilbert(10)
+disp("Analisis matriz de Hilbert de 13x13")
+rhilbert(13)
+
+disp("Podemos ver que conforme va creciendo el tamaño de la matriz")
+disp("La norma del error va creciendo hasta que en la matriz de Hilbert")
+disp("Y también la condición de la matriz de Hilbert va creciendo muy rápidamente")
+disp("Para una matriz H de 10x10 ya tenemos error muy grande y una condición horrorosa")
