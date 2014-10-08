@@ -42,128 +42,51 @@ for i = n:-1:1 //(*)
 end
 endfunction
 
-function [L,U,signo] = faclupp(A)
-// Autores: Jorge Zavaleta, Hector E. Gomez Morales
-// Funcion que realiza la factorizacion LU de la matriz A (A = L*U) usando pivoteo parcial
+function [H,b] = hilbert(n)
+// Autores: Hector Enrique Gomez Morales
+// Funcion que genera una matriz de Hilbert de tamaño nxn
 //*****************************************************************************
-//->Entrada
-// A (Matriz Real) - Matriz de tamaño n x n con entradas reales.
-//
-//->Salida
-// L (Matriz Real) - Matriz triangular inferior de tamaño n x n.
-//
-// U (Matriz Real) - Matriz triangular superior de tamaño n x n.
-//
-// signo (Real) - Indica el signo de la determinante de la matriz
-//*****************************************************************************
-
-n=size(A,'r');
-signo = 1;
-for i=1:n-1
-    [val,r] = max(abs(A(i:n,i)));
-    r = r + i - 1;
-    
-    // Realizamos pivoteo si es necesario, llevamos cuenta del signo
-    if r ~= i
-        signo = signo * -1
-        A([i r],1:n) = A([r i],1:n);
-    end
-  
-    for k=i+1:n
-        A(k,i)=A(k,i)/A(i,i);            
-        A(k,i+1:n)=A(k,i+1:n)-A(k,i)*A(i,i+1:n);
-    end
-end
-
-// Se extrae L y U de A.
-L = eye(n,n) + tril(A,-1);
-U = triu(A);
-endfunction
-
-
-function x = lur(A,b)
-// Autores: Jorge Zavaleta, Hector E. Gomez Morales
-// Funcion que resuelve un sistema de ecuaciones usando factorizacion LU 
-// el sistema de ecuaciones lineales Ax = b mediante factorizacion LU, STI y STS 
-//*****************************************************************************
-//->Entrada
-// A (Matriz Real) - Matriz de tamaño n x n con entradas reales.
-//
-//  b (Vector Real) - Vector de tamaño n con entradas reales.
+// -> Entrada
+//  n (Real) - Indica el tamaño de la matriz de Hilbert deseada
 //
 // -> Salida
-//  x (Vector Real) - Vector de tamaño n con entradas reales que representan la
-//                    solucion al sistema de ecuaciones.
+//  H (Matriz Real) - Una matriz de Hilbert de nxn
+//  
+//  b (Vector Real) - Vector que es la solucuion de H para Hx = b con todas sus componentes uno.
 //*****************************************************************************
-n=size(A,'r');
-for i=1:n-1
-    [val,r] = max(abs(A(i:n,i)));
-    r = r + i - 1;
-
-    // Realizamos pivoteo si es necesario
-    if r ~= i
-        A([i r],1:n) = A([r i],1:n);
-        b([i r]) = b([r i]);
-    end
-      
-    for k=i+1:n
-        A(k,i)=A(k,i)/A(i,i);            
-        A(k,i+1:n)=A(k,i+1:n)-A(k,i)*A(i,i+1:n);
-    end
+H = ones(n,n)
+for i=1:n
+  for j=1:n
+    H(i,j) = 1 / (i+j-1)
+  end
 end
 
-// Se extrae L y U de A.
-L = eye(n,n) + tril(A,-1);
-U = triu(A);
-
-// Resolvemos los sistemas usando STI y STS
-y = STI(L,b)
-x = STS(U,y)
+b = H * (ones(n,1))
 endfunction
 
-function d = mdet(A)
-// Autores: Jorge Zavaleta, Hector E. Gomez Morales
-// Funcion que realiza el calculo del determinante usando factorizacion LU
-// y la propiedad de que el determinante de matrices escalonada es el producto
-// de su diagonal y ademas que det(AB) = det(A)det(B)
-//*****************************************************************************
-//->Entrada
-// A (Matriz Real) - Matriz de tamaño m x n con entradas reales.
-//
-//->Salida
-// d (Real) - Valor del determinante de A cuando se puede calcular o %nan
-//            en el caso contrario.
-//*****************************************************************************
-nr = size(A,'r');
-if nr ~= size(A,'c'); //Matriz no cuadrada
-    disp('La matriz no es cuadrada');
-    d = %nan;
-else
-    select nr
-		case 1 //Escalar
-			d = A;
-		else //Matriz nxn
-      [L,U,signo] = faclupp(A)
-      dl = prod(diag(L))
-      du = prod(diag(U))
-      d = dl*du
-	end
-end
-endfunction 
+function r = rhilbert(n)
+[H,b] = hilbert(n)
+CT = chol(H)
 
-A = [2,4,-2;4,9,-3;-2,-1,7;]
-B = [4;8;-6]
-C = [2,4,-2;4,-1,-3;-2,9,7;]
+y = STI(CT.', b)
+x = STS(CT, y)
 
-disp("Matriz A:")
-disp(A)
-disp("Vector b:")
-disp(B)
-disp("Solucion sistema Ax = b:")
-disp(lur(A,B))
-
-disp("Determinante de A:")
-disp(mdet(A))
-
-disp("Matriz C:")
-disp(mdet(C))
+disp("Vector b")
+disp(b)
+disp("H*x")
+disp(H*x)
+disp("Vector x resuelto:")
+disp(x)
+disp("b - (H*x)")
+disp(b-(H*x))
+r = norm(b - (H*x), 'inf')
+err = x - ones(n,1)
+disp("Normal residual:")
+disp(r)
+disp("Error dado x:")
+disp(err)
+disp("Norma del error")
+disp(norm(err))
+disp("Condicion de H")
+disp(cond(H))
+endfunction
