@@ -1,8 +1,5 @@
 function L = cholesky(A)
 // Autores: Hector E. Gomez Morales
-// Funcion que realiza la factorizacion de cholesky ie A = LL^t (L triangular inferior)
-// Regresa L una matriz triangular inferior
-// A debe ser una matriz cuadrada, simetrica y definida positiva para que se pueda realizar esta factorizacion
 //*****************************************************************************
 //->Entrada
 // A (Matriz Real) - Matriz de tamaño n x n con entradas reales.
