@@ -1,15 +1,14 @@
 function c = interpnewton(x,f)
 // Autores: Hector E. Gomez Morales
-// Funcion que crea una matriz de vandermonde segun un vector de coeficientes
-// y un tamaño del grado de polinomio que queremos.
+// Funcion que realiza la interpolacion de Newton dado un conjuntos de puntos y sus imagenes.
 //*****************************************************************************
 //->Entrada
-// a (Vector Real) - Vector con los coeficientes alpha de la matriz de vandermonde
+// x (Vector Real) - Vector columna que contiene los numeros x(i)
 //
-// n (Real) - Grado del polinomio asociado a la matriz de vandermonde
+// f (Vector Real) - Vector columna que contiene los valores (imagenes) su x(i) correspondiente
 //
 //->Salida
-// v (Matriz Real) - Matriz de vandermonde con los coeficientes dados.
+// c (Matriz Real) - Vector columna que contiene los coeficientes F(i,i), ie los coeficientes de la interpolacion de Hermite
 //
 //*****************************************************************************
 funcprot(0)
@@ -18,36 +17,31 @@ F = zeros(n,n)
 
 F(1:n,1) = f
 
-disp("Matriz inicial")
-disp(F)
-
 for j=2:n
   for i=j:n
     F(i,j) = (F(i,j-1) - F(i-1,j-1))/(x(i)-x(i-j+1))
-    
-    disp("Valor F(i,j)")
-    disp(F(i,j))
   end
 end
-
-disp("Matriz final")
-disp(F)
 
 c = diag(F)
 endfunction
 
 function [x,f] = plotsolution(X,Y,P)
 // Autores: Hector E. Gomez Morales
-// Funcion que crea una matriz de vandermonde segun un vector de coeficientes
-// y un tamaño del grado de polinomio que queremos.
+// Funcion que obtiene la interpolacion de Newton del inciso a) y b) del Ejercicio 2
+// Obtiene los coeficientes y obtiene los puntos para graficar el polinomio
 //*****************************************************************************
 //->Entrada
-// a (Vector Real) - Vector con los coeficientes alpha de la matriz de vandermonde
+// X (Vector Real) - Vector columna que contiene los numeros x(i)
 //
-// n (Real) - Grado del polinomio asociado a la matriz de vandermonde
+// Y (Vector Real) - Vector columna que contiene las imagenes correspondientes a los numeros x(i)
+//
+// P (Real) - Numero de puntos a graficar de la interpolacion de la solucion
 //
 //->Salida
-// v (Matriz Real) - Matriz de vandermonde con los coeficientes dados.
+// x (Vector Real) - Vector con los P puntos generados
+//
+// f (Vector Real) - Vector con las imagenes usando el polinomio de interpolacion de Hermite
 //
 //*****************************************************************************
 funcprot(0)
@@ -72,12 +66,9 @@ end
 
 plot(X,Y, "+-r")
 plot(x,f)
-
+title("Polinomio Interpolación Newton","color","red","fontsize",4);
+xlabel("Rojo datos, Azul interpolación")
 endfunction
-
-
-
-
 
 X = [0; 0.1; 0.3; 0.6; 1.0]
 Y = [-6.0; -5.89483; -5.65014; -5.17788; -4.28172;]
