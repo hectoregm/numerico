@@ -1,15 +1,16 @@
 function c = interphermite(x,f,fp)
 // Autores: Hector E. Gomez Morales
-// Funcion que crea una matriz de vandermonde segun un vector de coeficientes
-// y un tamaño del grado de polinomio que queremos.
+// Funcion que realiza la interpolacion de Hermite dado un conjuntos de puntos y su primera derivada.
 //*****************************************************************************
 //->Entrada
-// a (Vector Real) - Vector con los coeficientes alpha de la matriz de vandermonde
+// x (Vector Real) - Vector columna que contiene los numeros x(i)
 //
-// n (Real) - Grado del polinomio asociado a la matriz de vandermonde
+// f (Vector Real) - Vector columna que contiene los valores (imagenes) su x(i) correspondiente
+//
+// fp (Vector Real) - Vector columna que contiene la derivada en los x(i) correspondientes
 //
 //->Salida
-// v (Matriz Real) - Matriz de vandermonde con los coeficientes dados.
+// c (Matriz Real) - Vector columna que contiene los coeficientes Q(i,i), ie los coeficientes de la interpolacion de Hermite
 //
 //*****************************************************************************
 funcprot(0)
@@ -36,37 +37,27 @@ for i=1:n
   
 end
 
-disp("desplegando z")
-disp(z)
-
 for i=3:nm
   for j=3:i
-    disp(i,j)
-    disp(z(i),z(i-j+1))
     Q(i,j) = (Q(i,j-1)-Q(i-1,j-1))/(z(i)-z(i-j+1))
-    disp("Display Q(i,j)")
-    disp(Q(i,j))
   end
 end
-
-disp("Matriz final")
-disp(Q)
 
 c = diag(Q)
 endfunction
 
 function [x,f] = plotsolutiona(P)
 // Autores: Hector E. Gomez Morales
-// Funcion que crea una matriz de vandermonde segun un vector de coeficientes
-// y un tamaño del grado de polinomio que queremos.
+// Funcion que obtiene la interpolacion de Hermite del inciso a) del Ejercicio 3
+// Obtiene los coeficientes y obtiene los puntos para graficar el polinomio
 //*****************************************************************************
 //->Entrada
-// a (Vector Real) - Vector con los coeficientes alpha de la matriz de vandermonde
-//
-// n (Real) - Grado del polinomio asociado a la matriz de vandermonde
+// P (Real) - Numero de puntos a graficar de la interpolacion de la solucion a
 //
 //->Salida
-// v (Matriz Real) - Matriz de vandermonde con los coeficientes dados.
+// x (Vector Real) - Vector con los P puntos generados
+//
+// f (Vector Real) - Vector con las imagenes usando el polinomio de interpolacion de Hermite
 //
 //*****************************************************************************
 funcprot(0)
@@ -96,21 +87,22 @@ end
 
 plot(X,F, "+-r")
 plot(x,f)
-
+title("Polinomio Interpolación Hermite Inciso a)","color","red","fontsize",4);
+xlabel("Rojo datos, Azul interpolación")
 endfunction
 
 function [x,f] = plotsolutionb(P)
 // Autores: Hector E. Gomez Morales
-// Funcion que crea una matriz de vandermonde segun un vector de coeficientes
-// y un tamaño del grado de polinomio que queremos.
+// Funcion que obtiene la interpolacion de Hermite del inciso b) del Ejercicio 3
+// Obtiene los coeficientes y obtiene los puntos para graficar el polinomio
 //*****************************************************************************
 //->Entrada
-// a (Vector Real) - Vector con los coeficientes alpha de la matriz de vandermonde
-//
-// n (Real) - Grado del polinomio asociado a la matriz de vandermonde
+// P (Real) - Numero de puntos a graficar de la interpolacion de la solucion b
 //
 //->Salida
-// v (Matriz Real) - Matriz de vandermonde con los coeficientes dados.
+// x (Vector Real) - Vector con los P puntos generados
+//
+// f (Vector Real) - Vector con las imagenes usando el polinomio de interpolacion de Hermite
 //
 //*****************************************************************************
 funcprot(0)
@@ -140,26 +132,16 @@ end
 
 plot(X,F, "+-r")
 plot(x,f)
-
+title("Polinomio Interpolación Hermite Inciso b)","color","red","fontsize",4);
+xlabel("Rojo datos, Azul interpolación")
 endfunction
 
-
-
-
-
-X = [-0.5; -0.25; 0]
-F = [-0.0247500; 0.3349375; 1.101]
-FP = [0.751; 2.189; 4.002]
-X1 = [0.1; 0.2; 0.3; 0.4]
-F1 = [-0.62049958; -0.28398668; 0.00660095; 0.24842440]
-FP1 = [3.58502082; 3.14033271; 2.66668043; 0.24842440]
 X2 = [1.3; 1.6; 1.9]
 F2 = [0.620086; 0.4554022; 0.2818186]
 FP2 = [-0.5220232; -0.5698959; -0.5811571]
 
 //disp(interpnewton(X,Y))
 //disp(interpnewton(X2,Y2))
-interphermite(X2,F2,FP2)
 scf(0)
 plotsolutiona(100)
 scf(1)
