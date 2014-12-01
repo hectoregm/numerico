@@ -330,44 +330,20 @@ end
 val = p;
 endfunction
 
-func="230*x^4 + 18*x^3 + 9*x^2 - 221*x - 9"
-disp("Función: 230*x^4 + 18*x^3 + 9*x^2 - 221*x - 9")
-disp("Raíz obtenida intervalo [-1,0], usando método  biseccion")
-[val, numiter] = biseccion(-1,0,func,1D-7)
-disp("Valor: "+string(val))
-disp("Iteraciones: "+string(numiter))
-disp("Raíz obtenida intervalo [0,1], usando método biseccion")
-[val, numiter] = biseccion(0,1,func,1D-7)
-disp("Valor: "+string(val))
-disp("Iteraciones: "+string(numiter))
-
-disp("Raíz obtenida intervalo [-1,0], usando método secante")
-[val, numiter] = secante(-1,0,func,1D-7)
-disp("Valor: "+string(val))
-disp("Iteraciones: "+string(numiter))
-disp("Raíz obtenida intervalo [0,1], usando método secante")
-[val, numiter] = secante(0.5,1,func,1D-7)
+func="2*x*(1/tan(x)) - x^2 + 1"
+disp("Función: f(x) = 2*x*(1/tan(x)) - x^2 + 1")
+disp("tolerancia = 1D-7")
+disp("Puntos iniciales (0,100]")
+disp("Raíz mas pequeña usando  regla falsa")
+[val, numiter] = reglafalsa(0.01,100,func,1D-7, 1000)
 disp("Valor: "+string(val))
 disp("Iteraciones: "+string(numiter))
 
-disp("Raíz obtenida intervalo [-1,0], usando método  regla falsa")
-[val, numiter] = reglafalsa(-1,0,func,1D-7)
+func="tan(x)*tanh(x) + 1"
+disp("Función: f(x) = tan(x)*tanh(x) + 1")
+disp("tolerancia = 1D-7")
+disp("Puntos inicial 1")
+disp("Raíz mas pequeña usando método  newton")
+[val, numiter] = newton(1,func,1D-7, 1000)
 disp("Valor: "+string(val))
 disp("Iteraciones: "+string(numiter))
-disp("Raíz obtenida intervalo [0,1], usando método regla falsa")
-[val, numiter] = reglafalsa(0,1,func,1D-7)
-disp("Valor: "+string(val))
-disp("Iteraciones: "+string(numiter))
-
-disp("Raíz obtenida empezando en 0, usando método newton")
-[val, numiter] = newton(0,func,1D-7)
-disp("Valor: "+string(val))
-disp("Iteraciones: "+string(numiter))
-disp("Raíz obtenida empezando en 1, usando método newton")
-[val, numiter] = newton(1,func,1D-7)
-disp("Valor: "+string(val))
-disp("Iteraciones: "+string(numiter))
-
-disp("Como se puede ver el método de newton es muy bueno es el que menos iteraciones realiza para encontrar")
-disp("El valor en que se hace cero la función ademas vemos que es super simple de implementar")
-disp("Solo es necesario calcular la derivada de la función que se puede aproximar muy bien según la definición")
