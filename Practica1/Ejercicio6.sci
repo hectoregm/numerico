@@ -100,4 +100,4 @@ disp("El valor de la regla general es decir h = sqrt(%eps)*1 es igual a 1.490D-0
 scf(1)
 derivadacentradaplot(40)
 disp("Derivada por diferencias centradas:")
-disp("Vemos que igual existe minimo para el error pero se llega a este de forma mas rapida que con las diferencias finitas")
+disp("Vemos que igual existe mínimo para el error pero se llega a este de forma mas rápida que con las diferencias finitas")
